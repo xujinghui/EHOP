@@ -1,0 +1,58 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+mainClassName = 'hello.HelloWorld'
+
+// tag::repositories[]
+repositories {
+   // mavenCentral()
+    maven {
+		url "http://10.10.125.242:8081/nexus/content/groups/public/"
+	}
+	mavenLocal()
+}
+// end::repositories[]
+
+// tag::jar[]
+jar {
+    baseName = 'ehom'
+    version =  '0.1.0'
+}
+// end::jar[]
+
+// tag::dependencies[]
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    compile "joda-time:joda-time:2.2"
+    compile 'com.jcraft:jsch:0.1.53'
+    
+    compile 'org.springframework.data:spring-data-commons:1.10.0.RELEASE'
+    compile 'org.springframework:spring-context:4.1.6.RELEASE'
+    compile 'org.springframework:spring-web:4.1.6.RELEASE'
+    compile 'org.springframework:spring-jdbc:4.1.6.RELEASE'
+    compile 'org.springframework:spring-webmvc:4.1.6.RELEASE'
+    compile 'org.springframework.data:spring-data-jpa:1.8.0.RELEASE'
+    
+    runtime 'org.eclipse.jetty:jetty-webapp:9.3.0.M1'
+    runtime 'org.eclipse.jetty:jetty-jsp:9.3.0.M1'
+    
+    compile 'org.slf4j:jcl-over-slf4j:1.7.9'
+    compile 'org.slf4j:slf4j-api:1.7.9'
+    compile 'org.slf4j:slf4j-log4j12:1.7.9'
+    compile 'log4j:log4j:1.2.14'
+    
+    compile 'org.thymeleaf:thymeleaf:2.1.4.RELEASE'
+    compile 'org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE'
+	
+	testCompile("org.springframework:spring-test:4.1.6.RELEASE")
+}
+// end::dependencies[]
+
+// tag::wrapper[]
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+// end::wrapper[]
