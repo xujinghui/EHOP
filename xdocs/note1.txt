@@ -1,3 +1,7 @@
 Spring:
 
 http://cuisuqiang.iteye.com/blog/2042931
+
+
+graphite
+http://blog.noyog.com/%E5%9C%A8-ubuntu-12-04-%E4%B8%8A%E5%AE%89%E8%A3%85-graphite-%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7/
