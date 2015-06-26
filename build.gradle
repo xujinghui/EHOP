@@ -16,7 +16,7 @@ repositories {
 
 // tag::jar[]
 jar {
-    baseName = 'ehom'
+    baseName = 'ehop'
     version =  '0.1.0'
 }
 // end::jar[]
