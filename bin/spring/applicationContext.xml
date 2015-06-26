@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        
+  	<!-- **************************************************************** -->
+  	<!--  RESOURCE FOLDERS CONFIGURATION                                  -->
+  	<!--  Dispatcher configuration for serving static resources           -->
+  	<!-- **************************************************************** -->
+  	<mvc:resources location="/images/" mapping="/images/**" />
+  	<mvc:resources location="/css/" mapping="/css/**" />
+  	<!--
+	<mvc:resources location="/echarts-2.2.3/" mapping="/echarts-2.2.3/**" />
+	-->
+
+    <context:component-scan base-package="com.github.sx.hcm.mvc"/>
+    <mvc:annotation-driven/>    
+    <!--
+    <mvc:annotation-driven/> 
+    -->
+
+    	<!-- <mvc:annotation-driven conversion-service="conversionService"/> all resources inside folder src/main/webapp/resources 
+		are mapped so they can be refered to inside JSP files (see header.jsp for more details) -->
+	
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<!-- uses WebJars so Javascript and CSS libs can be declared as Maven dependencies (Bootstrap, jQuery...) -->
+	<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
+
+	<mvc:view-controller path="/" view-name="welcome" />
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" p:basename="messages/messages" />
+
+	
+	<bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".html" />
+		<property name="templateMode" value="HTML5" />
+		<property name="order" value="1" />
+	</bean>
+	
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver" />
+	</bean>
+	
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine" />
+	  	<property name="order" value="2" />
+	  	<!--
+		<property name="viewNames" value="*.html,*.xhtml" />
+		-->
+		<property name="excludedViewNames" value="*.xml,echarts*,*.js" />  
+	</bean>	  	
+	
+	<!--
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">  
+        <property name="contentNegotiationManager" ref="cnManager"/>  
+
+        <property name="viewResolvers">  
+            <list>  
+ 
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">  
+                    <property name="order" value="1"/>  
+                </bean>  
+
+                <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">  
+                    <property name="templateEngine" ref="templateEngine" />  
+                    <property name="characterEncoding" value="UTF-8"/>  
+                    <property name="order" value="2"/>  
+                    <property name="excludedViewNames" value="*.xml" />  
+                </bean>  
+ 
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+                    <property name="prefix" value="/views/"/>  
+                    <property name="suffix" value=".jsp"/>  
+                    <property name="order" value="3"/>  
+                </bean>  
+            </list>  
+        </property>  
+    </bean> 
+    --> 
+    
+    <!-- Simple strategy: only path extension is taken into account -->  
+    <!--
+    <bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">  
+        <property name="favorPathExtension" value="true"/>  
+        <property name="ignoreAcceptHeader" value="true"/>  
+        <property name="defaultContentType" value="text/html"/>  
+
+        <property name="mediaTypes">  
+            <map>  
+                <entry key="html" value="text/html" />  
+                <entry key="xml" value="application/xml" />  
+                <entry key="atom" value="application/atom+xml" />  
+            </map>  
+        </property>  
+    </bean> 
+	-->
+	
+    <!--Created for testing and verifying.-->
+	<bean name="/hello" class="com.github.sx.hcm.mvc.demo.HelloWorldController"/>  
+
+</beans>
